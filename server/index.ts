@@ -1,14 +1,16 @@
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
-import { router, publicProcedure } from './trpc.js';
+import { router, publicProcedure, appProcedure, createContext } from './trpc.js';
 
 const appRouter = router({
-  greeting: publicProcedure.query(() => 'hello tRPC v10!'),
+  login: publicProcedure.query(() => 'fake-token-vapo'),
+  secret: appProcedure.query(() => 'Receba! 🤫')
 });
 
 export type AppRouter = typeof appRouter;
 
 const server = createHTTPServer({
   router: appRouter,
+  createContext,
 });
 
 server.listen(3000);
